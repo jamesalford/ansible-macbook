@@ -1,0 +1,10 @@
+{
+    "editor.minimap.enabled": false,
+    "editor.renderWhitespace": "none",
+    "workbench.colorCustomizations": {
+        "editorWhitespace.foreground": "#c8ff00",
+    },
+    "typescript.check.npmIsInstalled": false,
+    "extensions.ignoreRecommendations": false,
+    "editor.formatOnPaste": false,
+}

@@ -1,0 +1,62 @@
+---
+- hosts: all
+  become: false
+  connection: local
+  vars:
+    terraform_version: 0.11.2
+  tasks:
+    - name: install homebrew
+      shell: "/usr/bin/ruby -e \"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)\""
+      args:
+        creates: /usr/local/bin/brew
+
+    - name: Install useful packages
+      package: 
+        name: "{{ item }}"
+        state: latest
+      with_items:
+        - wget
+
+    - name: Install things from brew cask
+      shell: "brew cask install {{ item }}"
+      args:
+        creates: "/Applications/{{ item }}"
+      with_items:
+        - google-chrome
+        - visual-studio-code
+        - virtualbox
+        - virtualbox-extension-pack
+        - vagrant
+        - vagrant-manager
+
+    - name: Install visual studio code extensions
+      shell: "code - install -extension {{ item }}"
+      with_items:
+        - adamvoss.yaml
+        - castwide.solargraph
+        - haaaad.ansible
+        - jpogran.puppet-vscode
+        - mortenhenriksen.perl-debug
+        - ms-python.python
+        - rebornix.ruby
+        - rogalmic.bash-debug
+
+    - name: Add custom settings for VS Code
+      copy:
+        src: settings.json
+        dest: "~/Library/Application Support/Code/User/settings.json"
+
+    - name: Install things from brew
+      shell: "brew install {{ item }}"
+      args:
+        creates: "/usr/local/Cellar/{{ item }}"
+      with_items:
+        - docker
+        - python3
+
+    - name: Install Terraform 
+      shell: "wget https://releases.hashicorp.com/terraform/{{ terraform_version }}/terraform_{{ terraform_version }}_darwin_amd64.zip && unzip terraform_{{ terraform_version }}_darwin_amd64.zip -d /usr/local/bin/"
+      args:
+        chdir: /tmp
+        creates: /usr/local/bin/terraform
+    
