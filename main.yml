@@ -27,7 +27,9 @@
         - virtualbox
         - virtualbox-extension-pack
         - vagrant
-        - vagrant-manager
+
+    - name: Install vagrant manager
+      shell: "vagrant plugin install vagrant-hostmanager"
 
     - name: Install visual studio code extensions
       shell: "code - install -extension {{ item }}"
