@@ -21,6 +21,7 @@
       shell: "brew cask install {{ item }}"
       args:
         creates: "/Applications/{{ item }}"
+      failed_when: false
       with_items:
         - google-chrome
         - visual-studio-code
@@ -32,7 +33,7 @@
       shell: "vagrant plugin install vagrant-hostmanager"
 
     - name: Install visual studio code extensions
-      shell: "code - install -extension {{ item }}"
+      shell: "code --install-extension {{ item }}"
       with_items:
         - adamvoss.yaml
         - castwide.solargraph
@@ -42,6 +43,8 @@
         - ms-python.python
         - rebornix.ruby
         - rogalmic.bash-debug
+        - waderyan.nodejs-extension-pack
+      failed_when: false
 
     - name: Add custom settings for VS Code
       copy:
@@ -55,10 +58,12 @@
       with_items:
         - docker
         - python3
+        - node
+        - kubectl
+      failed_when: false
 
     - name: Install Terraform 
       shell: "wget https://releases.hashicorp.com/terraform/{{ terraform_version }}/terraform_{{ terraform_version }}_darwin_amd64.zip && unzip terraform_{{ terraform_version }}_darwin_amd64.zip -d /usr/local/bin/"
       args:
         chdir: /tmp
         creates: /usr/local/bin/terraform
-    
