@@ -5,7 +5,7 @@
   vars:
     terraform_version: 0.11.2
   tasks:
-    - name: install homebrew
+    - name: Install homebrew
       shell: "/usr/bin/ruby -e \"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)\""
       args:
         creates: /usr/local/bin/brew
