@@ -28,6 +28,7 @@
         - virtualbox
         - virtualbox-extension-pack
         - vagrant
+        - minishift
 
     - name: Install vagrant manager
       shell: "vagrant plugin install vagrant-hostmanager"
@@ -61,6 +62,11 @@
         - node
         - kubectl
       failed_when: false
+
+    - name: Install Python 3 modules using pip
+      shell: "pip3 install {{ item }}"
+      with_items:
+        - selinium
 
     - name: Install Terraform 
       shell: "wget https://releases.hashicorp.com/terraform/{{ terraform_version }}/terraform_{{ terraform_version }}_darwin_amd64.zip && unzip terraform_{{ terraform_version }}_darwin_amd64.zip -d /usr/local/bin/"
